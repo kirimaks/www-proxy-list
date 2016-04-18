@@ -1,9 +1,9 @@
 import scrapy
-from scrapy.crawler import CrawlerProcess
-from proxy_list.spiders.free_proxy import FreeProxySpider
-from scrapy.utils.project import get_project_settings
-from proxy_list.items import ProxyItem
-from random import randrange
+from scrapy.crawler                 import CrawlerProcess
+from scrapy.utils.project           import get_project_settings
+from proxy_list.spiders.free_proxy  import FreeProxySpider
+from proxy_list.items               import ProxyItem
+from random                         import randrange
 
 class GetProxy:
     def __init__(self, debug=False, *pargs, **kwargs):
