@@ -16,13 +16,14 @@ def create_table(cursor):
         pid         SERIAL PRIMARY KEY,
         address     CHAR(16) NOT NULL,
         port        CHAR(8) NOT NULL,
-        country     CHAR(32) NOT NULL,    
-        protocol    CHAR(8) NOT NULL
+        country     CHAR(24) NOT NULL,    
+        protocol    CHAR(8) NOT NULL,
+        added       TIMESTAMP
     )""")
 
 def write_proxy(cursor, item):
-    cursor.execute("""INSERT INTO \"proxy_list\"(address, port, country, protocol) 
-        VALUES('{addr}', '{port}', '{country}', '{protocol}' )""".format(
+    cursor.execute("""INSERT INTO \"proxy_list\"(address, port, country, protocol, added) 
+        VALUES('{addr}', '{port}', '{country}', '{protocol}', now() )""".format(
             addr = item['address'],
             port = item['port'],
             country = item['country'],
