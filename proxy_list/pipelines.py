@@ -13,12 +13,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def create_table(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS \"proxy_list\"(
-        pid         INTEGER PRIMARY KEY AUTOINCREMENT,
         address     TEXT NOT NULL,
         port        TEXT NOT NULL,
         country     TEXT NOT NULL,
         protocol    TEXT NOT NULL,
-        added       TEXT
+        added       TEXT NOT NULL,
+        UNIQUE(address, port, protocol)
     )""")
 
 

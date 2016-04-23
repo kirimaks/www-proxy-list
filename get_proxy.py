@@ -29,4 +29,4 @@ class GetProxy(object):
 
         out = self.cursor.fetchone()
         pattern = "{protocol}://{addr}:{port}"
-        return pattern.format(protocol=out[4].strip(), addr=out[1].strip(), port=out[2].strip())
+        return pattern.format(protocol=out[3].strip(), addr=out[0].strip(), port=out[1].strip())
