@@ -1,3 +1,4 @@
+Run create_proxy_list.py (or add to cron) to generate list of proxy servers.
 ```sh
 >>> from proxy_list.get_proxy import GetProxy
 >>> pl = GetProxy()
