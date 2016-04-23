@@ -2,6 +2,7 @@
 import scrapy
 from .. import items
 
+
 class FreeProxySpider(scrapy.Spider):
     name = "free_proxy"
     allowed_domains = ["free-proxy-list.net"]
@@ -23,7 +24,5 @@ class FreeProxySpider(scrapy.Spider):
             # get protocol "http/https"
             protocol = tr.xpath("td[7]/text()").extract()[0]
             cur_proxy['protocol'] = "https" if protocol == "yes" else "http"
-            
-            yield cur_proxy
-            
 
+            yield cur_proxy
