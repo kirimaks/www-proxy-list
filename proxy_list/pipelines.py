@@ -23,8 +23,8 @@ def create_table(cursor):
 
 
 def write_proxy(cursor, item):
-    cursor.execute("""INSERT INTO \"proxy_list\"(address, port, country, protocol, added)
-        VALUES('{addr}', '{port}', '{country}', '{protocol}', datetime() )""".format(
+    cursor.execute(u"""INSERT INTO \"proxy_list\"(address, port, country, protocol, added)
+        VALUES('{addr}', '{port}', '{country}', '{protocol}', datetime('now', 'localtime') )""".format(
             addr=item['address'],
             port=item['port'],
             country=item['country'],
@@ -38,9 +38,6 @@ def clear_table(cursor):
 
 
 class ProxyListPipeline(object):
-    def __init__(self):
-        pass
-
     def process_item(self, item, spider):
         write_proxy(self.cursor, item)
 
