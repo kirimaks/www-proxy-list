@@ -18,7 +18,7 @@ def create_table(cursor):
         country     TEXT NOT NULL,
         protocol    TEXT NOT NULL,
         added       TEXT NOT NULL,
-        UNIQUE(address, port, protocol)
+        UNIQUE(address, port)
     )""")
 
 

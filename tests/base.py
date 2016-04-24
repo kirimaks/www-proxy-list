@@ -43,7 +43,7 @@ def check_if_database_is_empty():
 def check_unique_addresses():
     connect = sqlite3.connect(db_name)
     cursor = connect.cursor()
-    cursor.execute("SELECT count(address) FROM proxy_list GROUP BY address HAVING count(address) > 1")
+    cursor.execute("select address, port, count(*) FROM proxy_list GROUP BY address, port HAVING count(*) > 1")
     out = cursor.fetchall()
     if len(out) > 1:
         print("%d not unique addresses" % len(out))
