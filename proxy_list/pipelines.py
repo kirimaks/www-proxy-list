@@ -7,6 +7,7 @@
 
 import os.path
 import sqlite3
+import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,15 +23,18 @@ def create_table(cursor):
     )""")
 
 
-def write_proxy(cursor, item):
-    cursor.execute(u"""INSERT INTO \"proxy_list\"(address, port, country, protocol, added)
-        VALUES('{addr}', '{port}', '{country}', '{protocol}', datetime('now', 'localtime') )""".format(
+def write_proxy(cursor, item, logger):
+    try:
+        cursor.execute(u"""INSERT INTO \"proxy_list\"(address, port, country, protocol, added)
+            VALUES('{addr}', '{port}', '{country}', '{protocol}', datetime('now', 'localtime') )""".format(
             addr=item['address'],
             port=item['port'],
             country=item['country'],
             protocol=item['protocol']
+            )
         )
-    )
+    except sqlite3.IntegrityError:
+        logger.warning("Attem to write a proxy that already exists. Skipped...")
 
 
 def clear_table(cursor):
@@ -38,8 +42,12 @@ def clear_table(cursor):
 
 
 class ProxyListPipeline(object):
+    def __init__(self):
+        self.logger = logging.getLogger()
+
     def process_item(self, item, spider):
-        write_proxy(self.cursor, item)
+        write_proxy(self.cursor, item, self.logger)
+        return item
 
     def open_spider(self, spider):
         self.connect = sqlite3.connect("data.db")
