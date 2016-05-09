@@ -8,9 +8,13 @@
 import os.path
 import sqlite3
 import logging
+import ConfigParser
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ini_config  = ConfigParser.ConfigParser()
+ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
+DB_NAME     = ini_config.get("Database", "db_name")
+DB_PATH     = os.path.join(BASE_DIR, DB_NAME)
 
 def create_table(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS \"proxy_list\"(
@@ -50,7 +54,7 @@ class ProxyListPipeline(object):
         return item
 
     def open_spider(self, spider):
-        self.connect = sqlite3.connect("data.db")
+        self.connect = sqlite3.connect(DB_PATH)
         self.cursor = self.connect.cursor()
         create_table(self.cursor)
         clear_table(self.cursor)

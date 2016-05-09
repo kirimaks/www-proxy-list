@@ -3,13 +3,21 @@ import os
 import sys
 import re
 import sqlite3
+import ConfigParser
 
 import_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(import_dir)
 
 from get_proxy import GetProxy
 
-db_name = "data.db"
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ini_config  = ConfigParser.ConfigParser()
+ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
+DB_NAME     = ini_config.get("Database", "db_name")
+DB_PATH     = os.path.join(BASE_DIR, DB_NAME)
+
+#db_name = "data.db"
+#db_name = "proxy_list.db"
 
 def get_many_proxy(num_of_proxy, proxy_obj):
     buff = []
@@ -31,7 +39,7 @@ def check_proxy(proxy):
     return re.search(reg_expr, proxy)
 
 def check_if_database_is_empty():
-    connect = sqlite3.connect(db_name)
+    connect = sqlite3.connect(DB_PATH)
     cursor = connect.cursor()
     cursor.execute("SELECT count(*) FROM proxy_list")
     out = cursor.fetchone()
@@ -41,7 +49,7 @@ def check_if_database_is_empty():
     return True
 
 def check_unique_addresses():
-    connect = sqlite3.connect(db_name)
+    connect = sqlite3.connect(DB_PATH)
     cursor = connect.cursor()
     cursor.execute("select address, port, count(*) FROM proxy_list GROUP BY address, port HAVING count(*) > 1")
     out = cursor.fetchall()

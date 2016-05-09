@@ -1,4 +1,4 @@
 *.pyc
 *.pyo
 *.ini
-data.db
+*.db

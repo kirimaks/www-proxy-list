@@ -1,18 +1,20 @@
 import sqlite3
 import os
 import sys
+import ConfigParser
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
+ini_config  = ConfigParser.ConfigParser()
+ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
+DB_NAME     = ini_config.get("Database", "db_name")
+DB_PATH     = os.path.join(BASE_DIR, DB_NAME)
 
 class GetProxy(object):
     def __init__(self):
-        self.dbname = "data.db"
-
-        if not os.path.exists(os.path.join(BASE_DIR, self.dbname)):
-            print("[%s] doesn't exists. Run create_proxy_list.py" % self.dbname)
+        if not os.path.exists(DB_PATH):
+            print("[%s] doesn't exists. Run create_proxy_list.py" % DB_PATH)
             sys.exit(1)
-        self.connect = sqlite3.connect(os.path.join(BASE_DIR, self.dbname))
+        self.connect = sqlite3.connect(DB_PATH)
         self.cursor = self.connect.cursor()
 
     def __del__(self):
