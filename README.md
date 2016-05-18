@@ -13,3 +13,5 @@ At first run "create_proxy_list.py" (or add to cron) to generate list of proxy s
 'http://183.111.169.207:3128'
 >>> 
 ```
+
+Feel free to open an issue.
