@@ -32,3 +32,16 @@ class GetProxy(object):
         out = self.cursor.fetchone()
         pattern = "{protocol}://{addr}:{port}"
         return pattern.format(protocol=out[3].strip(), addr=out[0].strip(), port=out[1].strip())
+
+    def get_https_proxy(self):
+        try:
+            self.cursor.execute("SELECT * FROM proxy_list WHERE protocol = 'https' ORDER BY random() LIMIT 1")
+        except sqlite3.OperationalError:
+            print("Something wrong with database, run create_proxy.py, exit...")
+            sys.exit(2)
+
+        out = self.cursor.fetchone()
+        pattern = "{protocol}://{addr}:{port}"
+        return pattern.format(protocol=out[3].strip(), addr=out[0].strip(), port=out[1].strip())
+
+
