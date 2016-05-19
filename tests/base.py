@@ -60,6 +60,11 @@ def check_unique_addresses():
     return True
 
 
+def check_https(proxy):
+    reg_expr = "^https\:\/\/\d+\.\d+\.\d+\.\d+\:\d{2,5}$"
+    return re.search(reg_expr, proxy)
+
+
 class BaseTest(unittest.TestCase):
     def __init__(self, *pargs, **kwargs):
         unittest.TestCase.__init__(self, *pargs, **kwargs)
@@ -84,6 +89,10 @@ class BaseTest(unittest.TestCase):
         """Testing if database contains only unique proxy addresses"""
         self.assertTrue(check_unique_addresses(), "Not all addresses are unique.")
 
+    def test_https(self):
+        proxy = self.pl.get_https_proxy()
+        self.assertTrue(check_https(proxy), "Not https")
+
     def test_proxy(self):
         """Generate proxy and test output"""
         self.shortDescription()
@@ -103,6 +112,10 @@ if __name__ == "__main__":
     # Get n proxies and test.
     for i in range(50):
         test_kit.addTest(BaseTest("test_proxy"))
+
+    # Generate 10 https proxies.
+    for i in range(10):
+        test_kit.addTest(BaseTest("test_https"))
 
     # Run tests.
     runner = unittest.TextTestRunner(verbosity=1)
