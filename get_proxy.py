@@ -38,7 +38,7 @@ class GetProxy(object):
             sys.exit(2)
 
         out = self.cursor.fetchone()
-        pattern = "{protocol}://{addr}:{port}"
+        pattern = u"{protocol}://{addr}:{port}"
         return pattern.format(protocol=out[3].strip(), addr=out[0].strip(), port=out[1].strip())
 
 
