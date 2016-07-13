@@ -1,11 +1,11 @@
 import sqlite3
 import os
 import sys
-import ConfigParser
+from configparser import ConfigParser
 from tools.logger import get_logger
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ini_config = ConfigParser.ConfigParser()
+ini_config = ConfigParser()
 ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
 DB_NAME = ini_config.get("Database", "db_name")
 DB_PATH = os.path.join(BASE_DIR, DB_NAME)

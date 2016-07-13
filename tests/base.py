@@ -3,7 +3,7 @@ import os
 import sys
 import re
 import sqlite3
-import ConfigParser
+from configparser import ConfigParser
 
 import_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(import_dir)
@@ -11,7 +11,7 @@ sys.path.append(import_dir)
 from get_proxy import GetProxy
 
 BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ini_config  = ConfigParser.ConfigParser()
+ini_config  = ConfigParser()
 ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
 DB_NAME     = ini_config.get("Database", "db_name")
 DB_PATH     = os.path.join(BASE_DIR, DB_NAME)

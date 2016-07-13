@@ -8,7 +8,7 @@
 import os.path
 import sqlite3
 import logging
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ini_config = ConfigParser()
