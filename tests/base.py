@@ -16,8 +16,6 @@ ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
 DB_NAME     = ini_config.get("Database", "db_name")
 DB_PATH     = os.path.join(BASE_DIR, DB_NAME)
 
-#db_name = "data.db"
-#db_name = "proxy_list.db"
 
 def get_many_proxy(num_of_proxy, proxy_obj):
     buff = []
