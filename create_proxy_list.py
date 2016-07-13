@@ -6,13 +6,9 @@ output (list of proxy servers) to database.
 Possibly called by cron.
 """
 
-from proxy_list.spiders.free_proxy  import FreeProxySpider
-from proxy_list.items               import ProxyItem
-from proxy_list                     import settings
-from scrapy.utils.project           import get_project_settings
-from scrapy.crawler                 import CrawlerProcess
-from random                         import randrange
-import scrapy
+from proxy_scraper.spiders.free_proxy import FreeProxySpider
+from proxy_scraper import settings
+from scrapy.crawler import CrawlerProcess
 
 
 # Calculate settings.

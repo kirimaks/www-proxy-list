@@ -8,13 +8,14 @@
 import os.path
 import sqlite3
 import logging
-import ConfigParser
+from ConfigParser import ConfigParser
 
-BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ini_config  = ConfigParser.ConfigParser()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ini_config = ConfigParser()
 ini_config.read(os.path.join(BASE_DIR, "proxy_list.cfg"))
-DB_NAME     = ini_config.get("Database", "db_name")
-DB_PATH     = os.path.join(BASE_DIR, DB_NAME)
+DB_NAME = ini_config.get("Database", "db_name")
+DB_PATH = os.path.join(BASE_DIR, DB_NAME)
+
 
 def create_table(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS \"proxy_list\"(
@@ -28,17 +29,22 @@ def create_table(cursor):
 
 
 def write_proxy(cursor, item, logger):
+
+    query_pattern = u"""INSERT INTO \"proxy_list\"\
+(address, port, country, protocol, added)
+VALUES( '{addr}', '{port}', '{country}', '{protocol}',
+datetime('now', 'localtime') )"""
+
+    query = query_pattern.format(addr=item['address'],
+                                 port=item['port'],
+                                 country=item['country'],
+                                 protocol=item['protocol'])
+
     try:
-        cursor.execute(u"""INSERT INTO \"proxy_list\"(address, port, country, protocol, added)
-            VALUES('{addr}', '{port}', '{country}', '{protocol}', datetime('now', 'localtime') )""".format(
-            addr=item['address'],
-            port=item['port'],
-            country=item['country'],
-            protocol=item['protocol']
-            )
-        )
+        cursor.execute(query)
     except sqlite3.IntegrityError:
-        logger.warning("Attem to write a proxy that already exists. Skipped...")
+        logger.warning("Attem to write a proxy that already exists. \
+Skipped...")
 
 
 def clear_table(cursor):

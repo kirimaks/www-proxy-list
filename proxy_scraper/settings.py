@@ -9,10 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'proxy_list'
+BOT_NAME = 'proxy_scraper'
 
-SPIDER_MODULES = ['proxy_list.spiders']
-NEWSPIDER_MODULE = 'proxy_list.spiders'
+SPIDER_MODULES = ['proxy_scraper.spiders']
+NEWSPIDER_MODULE = 'proxy_scraper.spiders'
 
 LOG_ENABLED = False
 
@@ -64,7 +64,7 @@ EXTENSIONS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     #'proxy_list.pipelines.SomePipeline': 300,
-    'proxy_list.pipelines.ProxyListPipeline' : 100,
+    'proxy_scraper.pipelines.ProxyListPipeline' : 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
