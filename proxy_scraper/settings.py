@@ -14,7 +14,7 @@ BOT_NAME = 'proxy_scraper'
 SPIDER_MODULES = ['proxy_scraper.spiders']
 NEWSPIDER_MODULE = 'proxy_scraper.spiders'
 
-LOG_ENABLED = False
+# LOG_ENABLED = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'proxy_list (+http://www.yourdomain.com)'
@@ -64,7 +64,8 @@ EXTENSIONS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     #'proxy_list.pipelines.SomePipeline': 300,
-    'proxy_scraper.pipelines.ProxyListPipeline' : 100,
+    #'proxy_scraper.pipelines.ProxyListPipeline' : 100,
+    'proxy_scraper.pipelines.MongoPipe' : 100,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
