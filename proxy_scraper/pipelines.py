@@ -15,6 +15,9 @@ class MongoPipe:
 
 
     def process_item(self, item, spider):
+        if item['protocol'] != "https":
+            return None
+
         try:
             self.collection.insert(dict(item))
         except DuplicateKeyError:
