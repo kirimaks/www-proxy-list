@@ -8,4 +8,4 @@ RUN apt update && \
 COPY ["./", "/proxy_list"]
 WORKDIR /proxy_list
 
-CMD ["scrapy", "crawl", "free_proxy"]
+CMD ["/usr/bin/python3", "run.py"]
